@@ -1,0 +1,63 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+.logo{
+  display: flex;
+  justify-content: space-between;
+  color: aqua;
+  margin: 12px;
+}
+.head{
+  display: flex;
+  justify-content: space-between;
+  background: #21222A;
+  padding: 30px,25px;
+  height:90px;
+}  
+  .logo h3{
+    margin: 12px;
+  }
+  .logo1{
+    display: flex;
+    justify-content: space-between; /* Adjust this based on your alignment preferences */
+    align-items: center; /* Optional: Align items vertically */
+  }
+
+.menu{
+  margin: 12px;
+  color: white;
+}
+.main{
+  background: #282D35;
+  padding: 27px,57px;
+height: 459px;
+
+}
+.main h1{
+  color: #FFF;
+
+font-family: Inter;
+font-size: 39.06px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+letter-spacing: -1.953px;
+  
+
+}
+.list li{
+  
+  color: #FFF;
+font-family: Inter;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+  margin-top: 27px;
+}
+.list li::marker{
+font-size: 2rem;
+color: aqua;
+
+}
