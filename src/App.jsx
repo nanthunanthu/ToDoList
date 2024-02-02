@@ -1,50 +1,80 @@
-import image from './Images/reactjs-icon.png';
-import images from './Images/reactjs-icon 2.png';
-import './App.css'
-function Header(){
-  return(
-    <div className='head'>
-    <div className="logo" >
-    <img src={image}></img>
-      <h3>React Facts</h3>                                                                                                       
-      </div>
-      <div className='menu'>
-<h3>React Course-project one</h3>
-      </div>
-    </div>
-  )
-}
+import React, { useState, useEffect } from "react";
+import "./App.css";
+export default function App() {
+  const [input, setInput] = useState("");
+  const [list, setList] = useState(
+    JSON.parse(localStorage.getItem("key")) || [
+      {
+        id: 1,
+        text: "todo",
+        box: true,
+      },
+    ]
+  );
+  const saveToLocalStorage = (updatedList) => {
+    localStorage.setItem("key", JSON.stringify(updatedList));
+  };
 
-function Main(){
-  return(
-    <div className="main">
-    <h1>Fun Facts About React</h1>
-    <div className="logo1">
-        <ul className='list'>
-      <li>Was first released in 2013</li>
-      <li>Was originally created by Jordan Walke</li>
-      <li>Has well over 100K stars on GitHub</li>
-      <li>Is maintained by Facebook</li>
-      <li>Powers thousands of enterprise apps, including mobile apps</li>
-    </ul>
-    <img src={images}></img>
-    </div>
-    
-    </div>
-  )
-}
+  const handleCheckboxChange = (id) => {
+    setList((prevList) => {
+      const updatedList = prevList.map((task) => {
+        if (task.id === id) {
+          return { ...task, box: !task.box };
+        }
+        return task;
+      });
+      saveToLocalStorage(updatedList);
+      return updatedList;
+    });
+  };
+  const handleDelete = (id) => {
+    setList((prevList) => {
+      const updatedList = prevList.filter((task) => task.id !== id);
+      saveToLocalStorage(updatedList);
+      return updatedList;
+    });
+  };
+  const Elements = () => {
+    if (input.trim() !== "") {
+      const ran = Math.random() * 100;
+      setList((prevList) => [
+        ...prevList,
+        { id: ran, text: input, box: true },
+      ]);
+      setInput("");
+    }
+  };
 
-
-function App() {
- 
+  useEffect(() => {
+    saveToLocalStorage(list);
+  }, [list]);
 
   return (
     <>
-
-   <Header />
-   <Main />
+    <h1 className="heading">TO-DO LIST</h1>
+      <input
+        id="input"
+        value={input}
+        type="text"
+        placeholder="Enter Here"
+        onChange={(e) => setInput(e.target.value)}
+        className="container"
+      ></input>
+      <button className="container" onClick={Elements}>Add</button>
+      <ul className="list">
+        {list.map((item) => (
+          <li key={item.id}>
+            <input
+              name="checkbox"
+              checked={item.box}
+              onChange={() => handleCheckboxChange(item.id)}
+              type="checkbox"
+            />
+            <label>{item.text}</label>
+            <button className="container"onClick={() => handleDelete(item.id)}>Delete</button>
+          </li>
+        ))}
+      </ul>
     </>
-  )
+  );
 }
-
-export default App
